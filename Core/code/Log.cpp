@@ -4,6 +4,11 @@ namespace Oathkeeper
 {
 	Log* Log::_SLog = nullptr;
 
+	Log* Log::Get(void)
+	{
+		return _SLog;
+	}
+
 	Log::Log(const string& logName)
 	{
 		_SLog = this;

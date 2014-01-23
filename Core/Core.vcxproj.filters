@@ -36,6 +36,12 @@
     <ClInclude Include="code\Log.h">
       <Filter>code\Core</Filter>
     </ClInclude>
+    <ClInclude Include="code\DynamicLibrary.h">
+      <Filter>code\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Common.h">
+      <Filter>code\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Core.cpp">
@@ -45,6 +51,9 @@
       <Filter>code\System\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="code\Log.cpp">
+      <Filter>code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="code\DynamicLibrary.cpp">
       <Filter>code\Core</Filter>
     </ClCompile>
   </ItemGroup>
