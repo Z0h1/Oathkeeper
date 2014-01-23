@@ -4,15 +4,48 @@
     <Filter Include="code">
       <UniqueIdentifier>{35fc2e96-7280-40c0-bd36-a06bad34c665}</UniqueIdentifier>
     </Filter>
+    <Filter Include="code\Core">
+      <UniqueIdentifier>{365b5b65-77e1-4adf-9b72-b67faba72403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\System">
+      <UniqueIdentifier>{4d749360-d254-49c8-903f-d482421eaa95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\System\Graphic">
+      <UniqueIdentifier>{3d0e5994-c7fa-4aee-850c-ecedb1cc2756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\System\File">
+      <UniqueIdentifier>{d0174d10-5246-47d3-9d92-65199bb7eaac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="code\System\Math">
+      <UniqueIdentifier>{fd5dfdf7-100a-4f3b-aa50-80a7c4e7bf27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\Define.h">
+      <Filter>code\Core</Filter>
+    </ClInclude>
     <ClInclude Include="code\Core.h">
+      <Filter>code\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Oathkeeper.h">
       <Filter>code</Filter>
+    </ClInclude>
+    <ClInclude Include="code\GraphicSystem.h">
+      <Filter>code\System\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Log.h">
+      <Filter>code\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\Core.cpp">
-      <Filter>code</Filter>
+      <Filter>code\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="code\GraphicSystem.cpp">
+      <Filter>code\System\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="code\Log.cpp">
+      <Filter>code\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
