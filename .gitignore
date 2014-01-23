@@ -8,6 +8,7 @@
 
 Trash/*
 Product/*
+Build/*
 
 # Compiled Dynamic libraries
 *.so
