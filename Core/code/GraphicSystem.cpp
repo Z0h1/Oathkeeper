@@ -4,7 +4,6 @@ namespace Oathkeeper
 {
 	GraphicSystem::GraphicSystem()
 	{
-
 	}
 
 	GraphicSystem::~GraphicSystem()

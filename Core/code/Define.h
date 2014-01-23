@@ -14,6 +14,8 @@
 #include <list>
 #include <map>
 
+#include <Windows.h>
+
 using namespace std;
 
 namespace Oathkeeper
@@ -41,4 +43,5 @@ namespace Oathkeeper
 	class Core;
 	class GraphicSystem;
 	class Log;
+	class DynamicLibrary;
 }

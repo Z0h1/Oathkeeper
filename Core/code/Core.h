@@ -10,6 +10,10 @@ namespace Oathkeeper
 		Core(const string& logName = "Oathkeeper.log", const string& configFile = "Oathkeeper.conf");
 		~Core();
 
+		// Dynamic Library
+		bool LoadModule( const string& cModule );
+		bool UnLoadModule( const string& cModule );
+
 		// Graphic System
 		void AddGraphicSystem(GraphicSystem* pSystem);
 		void RemoveGraphicSystem(GraphicSystem* pSystem, bool destroy = true);
@@ -23,9 +27,10 @@ namespace Oathkeeper
 		// System
 		static GraphicSystem*	_SGraphicSystem;
 
-		//typedef map< string, DynamicLibrary* >				_lDynamicLibrary;
+		typedef map< string, DynamicLibrary* >				_DynamicLibrarys;
 		typedef map< _GraphicSystemType, GraphicSystem* >	_GraphicSystems;
 
-		_GraphicSystems	mGraphicSystems;
+		_DynamicLibrarys	mDynamicLibrarys;
+		_GraphicSystems		mGraphicSystems;
 	};
-};
+}

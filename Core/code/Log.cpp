@@ -51,4 +51,4 @@ namespace Oathkeeper
 			mLog.flush();
 		}
 	}
-};
+}

@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "GraphicSystem.h"
 #include "Log.h"
+#include "DynamicLibrary.h"
 
 namespace Oathkeeper
 {
@@ -27,13 +28,76 @@ namespace Oathkeeper
 		Log* log = Log::Get();
 		log = new Log(logName);
 
-		Log::Get()->DrawLine("Hello world");
+		Log::Get()->DrawLine( "Core: Загрузка завершена!" );
 	}
 
 	Core::~Core()
 	{
+		for ( auto& itDynamicLibrary : mDynamicLibrarys )
+		{
+			UnLoadModule( itDynamicLibrary.first );
+		}
+		mDynamicLibrarys.clear();
+
+		Log::Get()->DrawLine( "Core: Завершение работы!" );
+
+		delete Log::Get();
 	}
 
+	// Dynamic Library
+	typedef void (*START_DLL_MODULE)( void );
+	typedef void (*STOP_DLL_MODULE)( void );
+
+	bool Core::LoadModule( const string& cModule )
+	{
+		if ( mDynamicLibrarys.find(cModule) == mDynamicLibrarys.end() )
+		{
+			DynamicLibrary* pModule = new DynamicLibrary( cModule );
+
+			if ( pModule->CheckWork() )
+			{
+				START_DLL_MODULE pFunc = (START_DLL_MODULE)pModule->GetAddress( "Start_DynamicLibrary" );
+				pFunc();
+
+				mDynamicLibrarys[cModule] = pModule;
+
+				Log::Get()->DrawLine( "Core: Модуль " + cModule + " загружен" );
+
+				return true;
+			}
+			else
+			{
+				Log::Get()->DrawLine( "Core: Модуль " + cModule + " не работает!", MT_ERROR );
+			}
+		}
+		else
+		{
+			Log::Get()->DrawLine( "Core: Модуль " + cModule + " уже загружен", MT_WARNING );
+		}
+
+		return false;
+	}
+
+	bool Core::UnLoadModule( const string& cModule )
+	{
+		if ( mDynamicLibrarys.find( cModule ) != mDynamicLibrarys.end() )
+		{
+			STOP_DLL_MODULE pFunc = (STOP_DLL_MODULE)mDynamicLibrarys[cModule]->GetAddress( "Stop_DynamicLibrary" );
+			pFunc();
+
+			Log::Get()->DrawLine( "Core: Модуль " + cModule + " выгружен" );
+
+			return true;
+		}
+		else
+		{
+			Log::Get()->DrawLine( "Core: Модуль " + cModule + " не загружен", MT_WARNING );
+		}
+
+		return false;
+	}
+
+	// GraphicSystem
 	void Core::AddGraphicSystem(GraphicSystem* pSystem)
 	{
 		if (mGraphicSystems.find(pSystem->GetType()) == mGraphicSystems.end())
@@ -44,7 +108,7 @@ namespace Oathkeeper
 
 	void Core::RemoveGraphicSystem(GraphicSystem* pSystem, bool destroy)
 	{
-		_GraphicSystems::iterator itSystem = mGraphicSystems.find(pSystem->GetType());
+		auto itSystem = mGraphicSystems.find(pSystem->GetType());
 
 		if (itSystem != mGraphicSystems.end())
 		{
@@ -61,4 +125,4 @@ namespace Oathkeeper
 			}
 		}
 	}
-};
+}
