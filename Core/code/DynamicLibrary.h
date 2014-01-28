@@ -10,7 +10,7 @@ namespace Oathkeeper
 		DynamicLibrary( const string& cFileName );
 		~DynamicLibrary( void );
 
-		void* GetAddress( const string& cFunctionName );
+		void* GetAddress(const char* cFunctionName );
 		bool CheckWork( void ) const { return m_bWork; }
 
 	private:

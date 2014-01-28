@@ -17,6 +17,6 @@ namespace Oathkeeper
 	private:
 		static Log*	_SLog;
 
-		ofstream	mLog;
+		wofstream	mLog;
 	};
 }

@@ -7,8 +7,10 @@ namespace Oathkeeper
 	class OK_EXPORT Core
 	{
 	public:
-		Core(const string& logName = "Oathkeeper.log", const string& configFile = "Oathkeeper.conf");
+		Core(const string& logName = L"Oathkeeper.html", const string& configFile = L"Oathkeeper.conf");
 		~Core();
+
+		void Loop(bool autoupdate);
 
 		// Dynamic Library
 		bool LoadModule( const string& cModule );
@@ -16,7 +18,7 @@ namespace Oathkeeper
 
 		// Graphic System
 		void AddGraphicSystem(GraphicSystem* pSystem);
-		void RemoveGraphicSystem(GraphicSystem* pSystem, bool destroy = true);
+		void RemoveGraphicSystem(GraphicSystem* pSystem);
 
 		static Core* Get(void);
 		static GraphicSystem* GetGraphicSystem(void);
@@ -32,5 +34,8 @@ namespace Oathkeeper
 
 		_DynamicLibrarys	mDynamicLibrarys;
 		_GraphicSystems		mGraphicSystems;
+
+		// std
+		bool		mAutoupdate;
 	};
 }

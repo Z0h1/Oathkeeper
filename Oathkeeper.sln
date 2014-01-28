@@ -8,6 +8,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicSystem_Directx_11", 
 		{44C967B4-9662-4729-966B-C2F0EE70BE5A} = {44C967B4-9662-4729-966B-C2F0EE70BE5A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5C406369-D317-470F-9922-F90B70D3FB72} = {5C406369-D317-470F-9922-F90B70D3FB72}
+		{44C967B4-9662-4729-966B-C2F0EE70BE5A} = {44C967B4-9662-4729-966B-C2F0EE70BE5A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +28,10 @@ Global
 		{5C406369-D317-470F-9922-F90B70D3FB72}.Debug|Win32.Build.0 = Debug|Win32
 		{5C406369-D317-470F-9922-F90B70D3FB72}.Release|Win32.ActiveCfg = Release|Win32
 		{5C406369-D317-470F-9922-F90B70D3FB72}.Release|Win32.Build.0 = Release|Win32
+		{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}.Debug|Win32.Build.0 = Debug|Win32
+		{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}.Release|Win32.ActiveCfg = Release|Win32
+		{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

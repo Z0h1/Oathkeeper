@@ -14,20 +14,23 @@ namespace Oathkeeper
 		_SLog = this;
 
 		mLog.open( logName.c_str() );
+		mLog.imbue(std::locale(""));
 
-		mLog << "<html>" << endl;
-		mLog << "<head>" << endl;
-		mLog << "<title>Work log</title>" << endl;
-		mLog << "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">" << endl;
-		mLog << "</head>" << endl;
-		mLog << "<body>" << endl;
-		mLog << "<div class=\"header\"><b>Hailstorm Engine - Work log</b></div>" << endl;
+		mLog << L"<html>" << endl;
+		mLog << L"<head>" << endl;
+		mLog << L"<title>Work log</title>" << endl;
+		mLog << L"<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">" << endl;
+		mLog << L"</head>" << endl;
+		mLog << L"<body>" << endl;
+		mLog << L"<div class=\"header\"><b>Hailstorm Engine - Work log</b></div>" << endl;
+		
+		wcout.imbue(std::locale(""));
 	}
 
 	Log::~Log()
 	{
-		mLog << "</body>" << endl;
-		mLog << "</html>" << endl;
+		mLog << L"</body>" << endl;
+		mLog << L"</html>" << endl;
 
 		mLog.close();
 	}
@@ -40,18 +43,20 @@ namespace Oathkeeper
 
 			if (type == MT_NORMAL)
 			{
-				warning = "normal";
+				warning = L"normal";
 			}
 			else if (type == MT_WARNING)
 			{
-				warning = "warning";
+				warning = L"warning";
 			}
 			else if (type == MT_ERROR)
 			{
-				warning = "error";
+				warning = L"error";
 			}
 
-			mLog << "<div class=" + warning + ">" + text + "</div>" << endl;
+			mLog << L"<div class=" + warning + L">" + text + L"</div>" << endl;
+
+			wcout << warning << L": " << text << endl;
 
 			mLog.flush();
 		}

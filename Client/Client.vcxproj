@@ -11,18 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5C406369-D317-470F-9922-F90B70D3FB72}</ProjectGuid>
-    <RootNamespace>GraphicSystem_Directx_11</RootNamespace>
+    <ProjectGuid>{71DB6813-3E62-41DE-8FA0-1DBD4953B65B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Client</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -39,28 +40,31 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(Oathkeeper)\Build\$(Configuration)\</OutDir>
     <IntDir>$(Oathkeeper)\Trash\$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
     <OutDir>$(Oathkeeper)\Build\$(Configuration)\</OutDir>
     <IntDir>$(Oathkeeper)\Trash\$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(Oathkeeper)\GraphicSystem_Directx_11\code;$(Oathkeeper)\Core\code;$(DXSDK_DIR)\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>GS_DIRECTX_11_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(Oathkeeper)\Client\code;$(Oathkeeper)\Core\code;$(Oathkeeper)\GraphicSystem_Directx_11\code</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(TargetDir)$(TargetFileName)</OutputFile>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(Oathkeeper)\Build\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Core.lib;d3d11.lib;d3dx11d.lib;dxgi.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Oathkeeper)\Build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Core.lib;GraphicSystem_Directx_11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(TargetDir)$(TargetFileName) $(Oathkeeper)\Product\$(Configuration)\$(TargetFileName)</Command>
@@ -69,31 +73,30 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(Oathkeeper)\GraphicSystem_Directx_11\code;$(Oathkeeper)\Core\code;$(DXSDK_DIR)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Oathkeeper)\Client\code;$(Oathkeeper)\Core\code;$(Oathkeeper)\GraphicSystem_Directx_11\code</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(TargetDir)$(TargetFileName)</OutputFile>
-      <AdditionalDependencies>Core.lib;d3d11.lib;d3dx11d.lib;dxgi.lib;dxerr.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;$(Oathkeeper)\Build\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(Oathkeeper)\Build\$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Core.lib;GraphicSystem_Directx_11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy $(TargetDir)$(TargetFileName) $(Oathkeeper)\Product\$(Configuration)\$(TargetFileName)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="code\EnterPoint.cpp" />
-    <ClCompile Include="code\GraphicSystemD11.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="code\DefineD11.h" />
-    <ClInclude Include="code\GraphicSystemD11.h" />
+    <ClCompile Include="code\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

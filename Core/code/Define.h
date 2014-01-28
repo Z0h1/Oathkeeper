@@ -26,6 +26,8 @@ namespace Oathkeeper
 	#	define OK_EXPORT __declspec( dllimport )
 	#endif
 
+	#define string wstring
+
 	enum _MessageType
 	{
 		MT_NORMAL,

@@ -2,6 +2,7 @@
 #include "GraphicSystem.h"
 #include "Log.h"
 #include "DynamicLibrary.h"
+#include "ConfigFile.h"
 
 namespace Oathkeeper
 {
@@ -28,20 +29,59 @@ namespace Oathkeeper
 		Log* log = Log::Get();
 		log = new Log(logName);
 
-		Log::Get()->DrawLine( "Core: Загрузка завершена!" );
+		// Init Config
+		ConfigFile* config = new ConfigFile(configFile);
+
+		for (auto& it : config->Get())
+		{
+			if (it.first == L"load_module")
+			{
+				LoadModule(it.second);
+			}
+			else if (it.first == L"set_render_system")
+			{
+				if (it.second == L"DirectX_11" || it.second == L"directX_11" || it.second == L"Directx_11" || it.second == L"directx_11"
+					|| it.second == L"DirectX 11" || it.second == L"directX 11" || it.second == L"Directx 11" || it.second == L"directx 11"
+					|| it.second == L"DirectX11" || it.second == L"directX11" || it.second == L"Directx11" || it.second == L"directx11"
+					|| it.second == L"11")
+				{
+					//ChangeRenderSystem( GT_DIRECTX_11 );
+				}
+				else if (it.second == L"DirectX_9" || it.second == L"directX_9" || it.second == L"Directx_9" || it.second == L"directx_9"
+					|| it.second == L"DirectX 9" || it.second == L"directX 9" || it.second == L"Directx 9" || it.second == L"directx 9"
+					|| it.second == L"DirectX9" || it.second == L"directX9" || it.second == L"Directx9" || it.second == L"directx9"
+					|| it.second == L"9")
+				{
+					//ChangeRenderSystem( GT_DIRECTX_9 );
+				}
+			}
+		}
+
+		Log::Get()->DrawLine(L"Core: Загрузка завершена!");
 	}
 
 	Core::~Core()
 	{
-		for ( auto& itDynamicLibrary : mDynamicLibrarys )
+		for ( auto itDynamicLibrary : mDynamicLibrarys )
 		{
 			UnLoadModule( itDynamicLibrary.first );
 		}
 		mDynamicLibrarys.clear();
 
-		Log::Get()->DrawLine( "Core: Завершение работы!" );
+		Log::Get()->DrawLine(L"Core: Завершение работы!");
 
 		delete Log::Get();
+	}
+
+	void Core::Loop(bool autoupdate)
+	{
+		mAutoupdate = autoupdate;
+
+		while (mAutoupdate)
+		{
+
+			// error mAutoupdate = false;
+		}
 	}
 
 	// Dynamic Library
@@ -56,23 +96,23 @@ namespace Oathkeeper
 
 			if ( pModule->CheckWork() )
 			{
-				START_DLL_MODULE pFunc = (START_DLL_MODULE)pModule->GetAddress( "Start_DynamicLibrary" );
+				START_DLL_MODULE pFunc = (START_DLL_MODULE)pModule->GetAddress("Start_DynamicLibrary");
 				pFunc();
 
 				mDynamicLibrarys[cModule] = pModule;
 
-				Log::Get()->DrawLine( "Core: Модуль " + cModule + " загружен" );
+				Log::Get()->DrawLine(L"Core: Модуль " + cModule + L" загружен");
 
 				return true;
 			}
 			else
 			{
-				Log::Get()->DrawLine( "Core: Модуль " + cModule + " не работает!", MT_ERROR );
+				Log::Get()->DrawLine(L"Core: Модуль " + cModule + L" не работает!", MT_ERROR);
 			}
 		}
 		else
 		{
-			Log::Get()->DrawLine( "Core: Модуль " + cModule + " уже загружен", MT_WARNING );
+			Log::Get()->DrawLine(L"Core: Модуль " + cModule + L" уже загружен", MT_WARNING);
 		}
 
 		return false;
@@ -82,16 +122,16 @@ namespace Oathkeeper
 	{
 		if ( mDynamicLibrarys.find( cModule ) != mDynamicLibrarys.end() )
 		{
-			STOP_DLL_MODULE pFunc = (STOP_DLL_MODULE)mDynamicLibrarys[cModule]->GetAddress( "Stop_DynamicLibrary" );
+			STOP_DLL_MODULE pFunc = (STOP_DLL_MODULE)mDynamicLibrarys[cModule]->GetAddress("Stop_DynamicLibrary");
 			pFunc();
 
-			Log::Get()->DrawLine( "Core: Модуль " + cModule + " выгружен" );
+			Log::Get()->DrawLine(L"Core: Модуль " + cModule + L" выгружен");
 
 			return true;
 		}
 		else
 		{
-			Log::Get()->DrawLine( "Core: Модуль " + cModule + " не загружен", MT_WARNING );
+			Log::Get()->DrawLine(L"Core: Модуль " + cModule + L" не загружен", MT_WARNING);
 		}
 
 		return false;
@@ -106,23 +146,16 @@ namespace Oathkeeper
 		}
 	}
 
-	void Core::RemoveGraphicSystem(GraphicSystem* pSystem, bool destroy)
+	void Core::RemoveGraphicSystem(GraphicSystem* pSystem)
 	{
 		auto itSystem = mGraphicSystems.find(pSystem->GetType());
 
 		if (itSystem != mGraphicSystems.end())
 		{
 			if (_SGraphicSystem == pSystem)
-			{
 				_SGraphicSystem = nullptr;
-			}
 
 			mGraphicSystems.erase(itSystem);
-
-			if (destroy)
-			{
-				delete pSystem;
-			}
 		}
 	}
 }
